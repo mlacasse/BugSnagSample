@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:BugSnagSample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../../../bugsnag-cocoa/iOS/Bugsnag.xcodeproj">
+   </FileRef>
+</Workspace>
