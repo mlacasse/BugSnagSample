@@ -34,6 +34,12 @@ class GenerateOptions
               options.platform = platform
           end
 
+          opts.on("-k", "--key API KEY", String,
+            "The Bugsnag API key is used to identify which project to upload the dSYMs to."
+          ) do |key|
+            options.apiKey = key
+          end
+
           opts.on("-c", "--config CONFIGURATION", String,
               "The configuration type #{configurationList} to send to the generator.",
               "  (This is only required for generators that do not support multiple configurations.)") do |config|

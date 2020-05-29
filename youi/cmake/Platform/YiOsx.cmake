@@ -7,7 +7,7 @@ if(__yi_custom_platform_included)
 endif()
 set(__yi_custom_platform_included 1)
 
-include(${YouiEngine_DIR}/cmake/Platform/YiIos.cmake)
+include(${YouiEngine_DIR}/cmake/Platform/YiOsx.cmake)
 
 macro(yi_configure_platform)
     cmake_parse_arguments(_ARGS "" "PROJECT_TARGET" "" ${ARGN})
@@ -22,12 +22,12 @@ macro(yi_configure_platform)
 
     # Upload dSYMs to Bugsnag
     add_custom_target(UploadDSYMs
-        COMMAND ./bugsnag.rb -p ios -k ec866230dd7116c94845586bafc31326
+        COMMAND ./bugsnag.rb -p osx -k e8fec3c046d6d0eed80c60d4d30690a2
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
 
     yi_configure_framework(TARGET ${_ARGS_PROJECT_TARGET}
-        FRAMEWORK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bugsnag-cocoa/iOS/build/Debug/Bugsnag.framework"
+        FRAMEWORK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bugsnag-cocoa/OSX/build/Debug/Bugsnag.framework"
         CODE_SIGN_IDENTITY "iPhone Developer: Marc Lacasse (2TZHG9WARL)"
         EMBEDDED
     )
