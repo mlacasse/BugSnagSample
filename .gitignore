@@ -1,5 +1,6 @@
 # You.i specific ignores
 build/
+bugsnag-cocoa/
 
 # Created by https://www.gitignore.io/api/reactnative
 # Edit at https://www.gitignore.io/?templates=reactnative

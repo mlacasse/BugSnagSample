@@ -5,6 +5,6 @@
       location = "group:BugSnagSample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../../../bugsnag-cocoa/iOS/Bugsnag.xcodeproj">
+      location = "group:../../bugsnag-cocoa/iOS/Bugsnag.xcodeproj">
    </FileRef>
 </Workspace>
