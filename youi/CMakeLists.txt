@@ -133,6 +133,10 @@ endif()
 # will continue without failing.
 include(Modules/${YI_PLATFORM_LOWER}/YiPlatformResources OPTIONAL)
 
+if (IOS OR TVOS)
+    list(REMOVE_ITEM YI_PROJECT_CODE_FILES "${YouiEngine_DIR}/templates/mains/src/Apple/main.mm")
+endif()
+
 # The yi_add_executable function can be swapped with yi_add_library, if your project needs to
 # output a library instead of an application executable.
 include(Modules/YiAddExecutable)

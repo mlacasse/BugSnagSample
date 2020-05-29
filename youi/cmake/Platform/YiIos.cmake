@@ -20,18 +20,15 @@ macro(yi_configure_platform)
 
     include(Modules/apple/YiConfigureFramework)
 
-    # Upload dSYMs to New NewRelic
-    #if(YI_UPLOAD_DSYM)
-    #  add_custom_command(TARGET ${_ARGS_PROJECT_TARGET}
-    #      POST_BUILD
-    #      COMMAND /usr/bin/zip --recurse-paths --quiet "${CMAKE_CURRENT_SOURCE_DIR}/iOS_dSYM.zip" "${YI_BASE_OUTPUT_DIRECTORY}.dSYM"
-    #      COMMAND curl -F dsym=@"${CMAKE_CURRENT_SOURCE_DIR}/iOS_dSYM.zip" -H "X-APP-LICENSE-KEY: AA216ffa362de5f23adaec2ab8c09d1db36102ea91" https://mobile-symbol-upload.newrelic.com/symbol
-    #  )
-    #endif()
+    # Upload dSYMs to Bugsnag
+    add_custom_target(UploadDSYMs
+        COMMAND ./bugsnag.rb -p ios
+        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    )
 
     yi_configure_framework(TARGET ${_ARGS_PROJECT_TARGET}
         FRAMEWORK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../bugsnag-cocoa/iOS/build/Debug/Bugsnag.framework"
-        CODE_SIGN_IDENTITY ${YI_CODE_SIGN_IDENTITY}
+        CODE_SIGN_IDENTITY "iPhone Developer: Marc Lacasse (2TZHG9WARL)"
         EMBEDDED
     )
 
@@ -47,17 +44,5 @@ macro(yi_configure_platform)
         "-lc++"
         "-w"
       )
-
-    target_include_directories(${PROJECT_NAME}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${YI_PLATFORM_LOWER}/Libraries/AdobeMediaSDK/libs/Headers
-    )
-    target_include_directories(${PROJECT_NAME}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${YI_PLATFORM_LOWER}/Libraries/AdobeMobileServicesSDK/AdobeMobileLibrary
-    )
-
-    target_link_libraries(${PROJECT_NAME} PRIVATE -lMediaSDK -L${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${YI_PLATFORM_LOWER}/Libraries/AdobeMediaSDK/libs/)
-    target_link_libraries(${PROJECT_NAME} PRIVATE -lAdobeMobileLibrary -L${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${YI_PLATFORM_LOWER}/Libraries/AdobeMobileServicesSDK/AdobeMobileLibrary/)
-
-    target_link_libraries(${PROJECT_NAME} PRIVATE -lsqlite3)
 
 endmacro(yi_configure_platform)
