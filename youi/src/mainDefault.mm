@@ -32,6 +32,10 @@
 #            define YI_SIMULATE_TOUCH (1)
 #        endif
 
+#if defined(YI_OSX)
+#        import <Bugsnag/Bugsnag.h>
+#endif
+
 const float MILLIMETRES_PER_INCH = 25.4f;
 #        define LOG_TAG "mainDefault"
 
@@ -536,6 +540,11 @@ int main(int argc, char *argv[])
     glfwSetScrollCallback(pWindow, &MouseWheelCallback);
     glfwSetWindowSizeCallback(pWindow, &WindowSizeCallback);
     glfwSetFramebufferSizeCallback(pWindow, &WindowSizeCallback);
+
+#if defined(YI_OSX)
+    [Bugsnag startBugsnagWithApiKey:@"e8fec3c046d6d0eed80c60d4d30690a2"];
+    [Bugsnag notifyError: [[NSError alloc] initWithDomain:@"tv.youi" code:408 userInfo:nil]];
+#endif
 
     while (Running)
     {
