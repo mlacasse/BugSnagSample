@@ -28,8 +28,6 @@ macro(yi_configure_platform)
 
     yi_configure_framework(TARGET ${_ARGS_PROJECT_TARGET}
         FRAMEWORK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/bugsnag-cocoa/OSX/build/Debug/Bugsnag.framework"
-        CODE_SIGN_IDENTITY "iPhone Developer: Marc Lacasse (2TZHG9WARL)"
-        EMBEDDED
     )
 
     include(Modules/apple/YiFindFrameworkHelper)
