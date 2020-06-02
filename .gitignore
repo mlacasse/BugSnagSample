@@ -2,6 +2,8 @@
 build/
 bugsnag-cocoa/
 
+YiAppPackages.txt
+
 # Created by https://www.gitignore.io/api/reactnative
 # Edit at https://www.gitignore.io/?templates=reactnative
 

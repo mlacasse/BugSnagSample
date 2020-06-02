@@ -41,6 +41,6 @@ macro(yi_configure_platform)
         "-Obj-c"
         "-lc++"
         "-w"
-      )
+    )
 
 endmacro(yi_configure_platform)

@@ -33,7 +33,6 @@ macro(yi_configure_platform)
     )
 
     include(Modules/apple/YiFindFrameworkHelper)
-    yi_find_framework_helper(FRAMEWORK "CoreTelephony")
     yi_find_framework_helper(FRAMEWORK "SystemConfiguration")
     yi_find_framework_helper(FRAMEWORK "libc++.tbd")
     yi_find_framework_helper(FRAMEWORK "libz.tbd")
@@ -43,6 +42,6 @@ macro(yi_configure_platform)
         "-Obj-c"
         "-lc++"
         "-w"
-      )
+    )
 
 endmacro(yi_configure_platform)

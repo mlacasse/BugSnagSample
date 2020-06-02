@@ -117,6 +117,21 @@ set(YI_PROJECT_CODE_FILES
     ${YI_NATIVEMODULES_HEADERS}
 )
 
+# === START OF BUGSNAG ========================================================
+
+if (ANDROID)
+    add_library(lib_bugsnag SHARED IMPORTED)
+
+    # This directory is created automatically by the Bugsnag Gradle plugin
+    set(BUGSNAG_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build/android/project/${YI_PROJECT_NAME}/build/intermediates/bugsnag-libs)
+    set(BUGSNAG_INCLUDE_DIR ${BUGSNAG_LIB_DIR}/assets/include)
+
+    set_target_properties(lib_bugsnag PROPERTIES IMPORTED_LOCATION
+                          ${BUGSNAG_LIB_DIR}/jni/${ANDROID_ABI}/libbugsnag-ndk.so)
+endif()
+
+# === END OF BUGSNAG ==========================================================
+
 # Not all platforms will need to perform some kind of initialization. Because this is optional,
 # we first check to see if the command actually exists. If not, we can safely ignore it.
 #
@@ -170,6 +185,7 @@ target_include_directories(${PROJECT_NAME}
     PRIVATE ${_SRC_DIR}
     PRIVATE ${APPCOMMON_INCLUDE_DIR}
     PRIVATE ${YI_PLATFORM_INCLUDE_DIRECTORIES_${YI_PLATFORM_UPPER}}
+    PRIVATE ${BUGSNAG_INCLUDE_DIR}
 )
 unset(APPCOMMON_INCLUDE_DIR CACHE)
 
@@ -177,6 +193,7 @@ target_link_libraries(${YI_PROJECT_NAME}
     PRIVATE
         $<$<BOOL:${YI_BUILD_CLOUD_SERVER}>:youi::cloud>
         $<$<BOOL:${YI_BUILD_CLOUD_SERVER}>:youi::cloud-utilities>
+        $<$<BOOL:${ANDROID}>:lib_bugsnag>
         youi::cloud-module
         youi::react
 )
