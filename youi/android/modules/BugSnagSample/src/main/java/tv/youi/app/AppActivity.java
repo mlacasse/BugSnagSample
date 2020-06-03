@@ -16,5 +16,14 @@ public class AppActivity extends CYIActivity {
 
         // Test Bugsnag
         Bugsnag.notify(new RuntimeException("Test error"));
+
+        // Initialise native callbacks
+        performNativeBugsnagSetup();
+
+        // Cause crash
+        doCrash();
     }
+
+    protected native void performNativeBugsnagSetup();
+    protected native void doCrash();
 }

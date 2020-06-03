@@ -24,6 +24,9 @@
                  android:banner="@drawable/banner"
                  android:hasCode="true">
 
+        <meta-data android:name="com.bugsnag.android.API_KEY"
+                    android:value="cb8de240ac3c2885b5588f6e3a6aa1d5"/>
+
 	    <!-- Handling certain config changes prevent the activity from restarting in situations that You.i Engine can handle.
 	     - orientation and screenSize are specified for device rotations 
 	     - screenLayout is specified for entering/exiting multi-tasking mode
@@ -36,8 +39,6 @@
                   android:screenOrientation="@YI_SCREEN_ORIENTATION@">
             <meta-data android:name="tv.youi.lib_name"
                        android:value="@YI_PROJECT_NAME_LOWER@" />
-            <meta-data android:name="com.bugsnag.android.API_KEY"
-                       android:value="cb8de240ac3c2885b5588f6e3a6aa1d5"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <!-- Specifies the launcher intent category. This will be expanded at generation time to either
