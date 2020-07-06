@@ -3,10 +3,79 @@
  */
 import React, { Component } from "react";
 import { AppRegistry, Image, StyleSheet, Text, View } from "react-native";
-import { FormFactor } from "@youi/react-native-youi";
+import { DeviceInfo, FormFactor } from "@youi/react-native-youi";
+
+import './htmlDocumentPolyfill';
+
+import Bugsnag from '@bugsnag/js'
+
+const { _globalHandler, getGlobalHandler, setGlobalHandler } = global.ErrorUtils;
 
 export default class YiReactApp extends Component {
+  constructor(props) {
+    super(props);
+
+    // Initialize Bugsnag to begin tracking errors. Only an api key is required, but
+    // here are some other helpful configuration details:
+    Bugsnag.start({
+      // get your own api key at bugsnag.com
+      apiKey: 'e8fec3c046d6d0eed80c60d4d30690a2',
+
+      // if you track deploys or use source maps, make sure to set the correct version.
+      appVersion: '0.0.1',
+
+      // defines the release stage for all events that occur in this app.
+      releaseStage: 'development',
+
+      //  defines which release stages bugsnag should report. e.g. ignore staging errors.
+      enabledReleaseStages: [ 'development', 'production' ],
+
+      //  defines which breadcrumb types we want to track
+      enabledBreadcrumbTypes: ['log', 'state', 'error', 'manual'],
+
+      //  we're not a website
+      trackInlineScripts: false,
+    });
+
+    // intercept react-native error handling
+    this.defaultHandler = getGlobalHandler && getGlobalHandler() || _globalHandler;
+
+    // feed errors directly to our wrapGlobalHandler function
+    setGlobalHandler((exception, isFatal) => {
+      Bugsnag.notify(exception, event => {
+        event.context = 'Unhandled exception';
+        // Note that metadata can be declared globally, in the notification (as below) or in an onError.
+        // The below metadata will be supplemented (not replaced) by the metadata
+        // in the onError method. See our docs if you prefer to overwrite/remove metadata.
+        event.addMetadata('details', {
+          info: 'Any important details specific to the context of this particular error/function.',
+          deviceId: DeviceInfo.getDeviceId(),
+          systemName: DeviceInfo.getSystemName(),
+          systemVersion: DeviceInfo.getSystemVersion(),
+          manufacturer: DeviceInfo.getDeviceManufacturer(),
+          deviceType: DeviceInfo.getDeviceType(),
+          deviceModel: DeviceInfo.getDeviceModel(),
+          isFatal,
+        });
+        event.setUser('0001', 'marc.lacasse@youi.tv', 'Marc Lacasse');
+      });
+
+      this.defaultHandler(exception, isFatal);
+    });
+  }
+
+  componentDidMount() {
+    Bugsnag.leaveBreadcrumb('componentDidMount');
+
+    // This will trigger an unhandled exception since you can't convert a
+    // number to an uppercase letter.
+    const num = 0;
+    const str = num.toUpperCase();
+  }
+
   render() {
+    Bugsnag.leaveBreadcrumb('render');
+
     return (
       <View style={styles.mainContainer}>
         <View style={styles.headerContainer}>
