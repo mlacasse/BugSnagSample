@@ -1,7 +1,7 @@
 import { DeviceInfo } from '@youi/react-native-youi';
 
 const protocol = 'https';
-const host = 'localhost';
+const host = 'www.youi.tv';
 
 const appName = 'BugSnagSample';
 const appVersion = '0.0.1';
@@ -84,7 +84,7 @@ Object.defineProperty(location, 'host', {
 
 Object.defineProperty(location, 'href', {
   get() {
-    return `${protocol}://${host}`;
+    return `${protocol}://${host}/index.youi.bundle`;
   },
   configurable: true,
 });

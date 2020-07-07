@@ -19,7 +19,7 @@ export default class YiReactApp extends Component {
     // here are some other helpful configuration details:
     Bugsnag.start({
       // get your own api key at bugsnag.com
-      apiKey: 'e8fec3c046d6d0eed80c60d4d30690a2',
+      apiKey: 'ec866230dd7116c94845586bafc31326',
 
       // if you track deploys or use source maps, make sure to set the correct version.
       appVersion: '0.0.1',

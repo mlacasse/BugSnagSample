@@ -18,6 +18,7 @@ __generated__
 .DS_Store
 .AppleDouble
 .LSOverride
+*.map
 
 # Icon must end with two \r
 Icon
